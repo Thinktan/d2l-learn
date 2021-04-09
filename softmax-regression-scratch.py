@@ -5,6 +5,10 @@ import numpy as np
 import sys
 sys.path.append(".") # 为了导入上层目录的d2lzh_pytorch
 import d2lzh_pytorch as d2l
+from IPython import display
+import numpy as np
+import random
+from d2lzh_pytorch import *
 
 print("获取和读取数据")
 batch_size = 256
@@ -33,3 +37,49 @@ X_prob = softmax(X)
 print("定义模型")
 def net(X):
     return softmax(torch.mm(X.view((-1, num_inputs)), W) + b)
+
+print("定义损失函数")
+y_hat = torch.tensor([[0.1, 0.3, 0.6], [0.3, 0.2, 0.5]])
+y = torch.LongTensor([0, 2])
+y_hat.gather(1, y.view(-1, 1))
+
+def cross_entropy(y_hat, y):
+    return - torch.log(y_hat.gather(1, y.view(-1, 1)))
+
+
+print("计算分类准确率")
+def accuracy(y_hat, y):
+    return (y_hat.argmax(dim=1) == y).float().mean().item()
+
+print(accuracy(y_hat, y))
+
+print("训练模型")
+num_epochs, lr = 5, 0.1
+d2l.train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size, [W, b], lr)
+
+
+print("预测")
+X, y = iter(test_iter).next()
+
+true_labels = d2l.get_fashion_mnist_labels(y.numpy())
+pred_labels = d2l.get_fashion_mnist_labels(net(X).argmax(dim=1).numpy())
+titles = [true + '\n' + pred for true, pred in zip(true_labels, pred_labels)]
+
+d2l.show_fashion_mnist(X[0:9], titles[0:9])
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
