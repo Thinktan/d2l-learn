@@ -18,8 +18,8 @@ labels += torch.tensor(np.random.normal(0, 0.01, size=labels.size()), dtype=torc
 print(features[0], labels[0])
 
 # 第二个特征features[:,1]与标签labels的散点图
-set_figsize()
-plt.scatter(features[:, 1].numpy(), labels.numpy(), 1)
+#set_figsize()
+#plt.scatter(features[:, 1].numpy(), labels.numpy(), 1)
 #plt.show()
 
 
