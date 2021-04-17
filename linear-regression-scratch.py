@@ -19,7 +19,8 @@ print(features[0], labels[0])
 
 # 第二个特征features[:,1]与标签labels的散点图
 #set_figsize()
-#plt.scatter(features[:, 1].numpy(), labels.numpy(), 1)
+plt.scatter(features[:, 1].numpy(), labels.numpy(), 1)
+plt.savefig('./test2.jpg')
 #plt.show()
 
 
