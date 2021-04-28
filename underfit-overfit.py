@@ -6,7 +6,7 @@ import numpy as np
 import sys
 sys.path.append(".")
 
-import d2lzh_pytorch
+import d2lzh_pytorch as d2l
 
 n_train, n_test, true_w, true_b = 100, 100, [1.2, -3.4, 5.6], 5
 
@@ -43,10 +43,19 @@ def fit_and_plot(train_features, test_features, train_labels, test_labels):
         test_labels = test_labels.view(-1, 1)
         train_ls.append(loss(net(train_features), train_labels).item())
         test_ls.append(loss(net(test_features), test_labels).item())
-                                                                                                            print('final epoch: train loss', train_ls[-1], 'test loss', test_ls[-1])
-    semilogy(range(1, num_epochs + 1), train_ls, 'epochs', 'loss',
+
+    print('final epoch: train loss', train_ls[-1], 'test loss', test_ls[-1])
+    d2l.semilogy(range(1, num_epochs + 1), train_ls, 'epochs', 'loss',
              range(1, num_epochs + 1), test_ls, ['train', 'test'])
 
     print('weight:', net.weight.data,
           '\nbias:', net.bias.data)
 
+
+# 线性函数拟合：欠拟合
+#fit_and_plot(features[:n_train, :], features[n_train:, :], labels[:n_train], labels[n_train:])
+
+
+
+# 训练样本不足：过拟合
+fit_and_plot(poly_features[0:2, :], poly_features[n_train:, :], labels[0:2], labels[n_train:])
